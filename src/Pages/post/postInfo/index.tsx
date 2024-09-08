@@ -4,8 +4,11 @@ import {
   ChevronLeft,
   MessageCircle,
 } from 'lucide-react'
+
 import { Link } from 'react-router-dom'
+
 import github from '../../../assets/github.svg'
+
 import {
   InfoOfPost,
   InfosOfPost,
@@ -14,7 +17,22 @@ import {
   PostInfoHeader,
 } from './styles'
 
-export function PostInfo() {
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+
+interface PostInfoProps {
+  title: string
+  username: string
+  createdDate: string
+  numberOfComments: number
+}
+
+export function PostInfo({
+  title,
+  username,
+  createdDate,
+  numberOfComments,
+}: PostInfoProps) {
   return (
     <PostInfoContainer>
       <PostInfoHeader>
@@ -28,19 +46,24 @@ export function PostInfo() {
         </Link>
       </PostInfoHeader>
       <PostInfoContent>
-        <h1>JavaScript data types and data structures</h1>
+        <h1>{title}</h1>
         <InfosOfPost>
           <InfoOfPost>
             <img src={github} alt="" />
-            <span>cameronwll</span>
+            <span>{username}</span>
           </InfoOfPost>
           <InfoOfPost>
             <Calendar size={18} />
-            <span>Há 1 dia</span>
+            <span>
+              {formatDistanceToNow(new Date(createdDate), {
+                addSuffix: true,
+                locale: ptBR,
+              })}
+            </span>
           </InfoOfPost>
           <InfoOfPost>
             <MessageCircle size={18} />
-            <span>5 comentários</span>
+            <span>{numberOfComments} comentários</span>
           </InfoOfPost>
         </InfosOfPost>
       </PostInfoContent>

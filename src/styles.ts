@@ -13,4 +13,5 @@ export const PostsContainer = styled.div`
 
   width: 54rem;
   margin-inline: auto;
+  margin-bottom: 5rem;
 `

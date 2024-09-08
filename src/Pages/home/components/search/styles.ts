@@ -34,7 +34,14 @@ export const SearchInput = styled.input`
 
   color: ${(props) => props.theme['base-text']};
 
+  flex: 1;
+
   &::placeholder {
     color: ${(props) => props.theme['base-label']};
   }
+`
+
+export const SearchForm = styled.form`
+  width: 100%;
+  display: flex;
 `

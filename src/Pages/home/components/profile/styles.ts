@@ -20,6 +20,7 @@ export const ProfileContainer = styled.section`
 export const AvatarContainer = styled.img`
   height: 9.25rem;
   width: 9.25rem;
+  border-radius: 0.5rem;
 `
 
 export const ProfileInfoContainer = styled.div`

@@ -16,8 +16,20 @@ export const PostContainer = styled.div`
 
   cursor: pointer;
 
+  position: relative;
+
   &:hover {
     border: 2px solid ${(props) => props.theme['base-label']};
+  }
+
+  & small {
+    color: ${(props) => props.theme['base-span']};
+    font-size: 0.875rem;
+
+    position: absolute;
+
+    right: 1.5rem;
+    top: 0.75rem;
   }
 `
 
@@ -29,13 +41,7 @@ export const PostHeader = styled.div`
     color: ${(props) => props.theme['base-title']};
     font-size: 1.25rem;
     font-weight: 700;
-
-    width: 17.6875rem;
-  }
-
-  & small {
-    color: ${(props) => props.theme['base-span']};
-    font-size: 0.875rem;
+    margin-top: 0.25rem;
   }
 `
 

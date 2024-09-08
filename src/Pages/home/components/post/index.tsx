@@ -1,18 +1,36 @@
 import { PostContainer, PostContent, PostHeader } from './styles'
 
-export function Post() {
+import { formatDistanceToNow } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { useNavigate } from 'react-router-dom'
+
+interface PostProps {
+  number: number
+  title: string
+  dateOfCreated: string
+  content: string
+}
+
+export function Post({ number, title, dateOfCreated, content }: PostProps) {
+  const navigate = useNavigate()
+
+  function handleClick() {
+    navigate(`/post/${number}`)
+  }
+
   return (
-    <PostContainer>
+    <PostContainer onClick={handleClick}>
+      <small>
+        {formatDistanceToNow(new Date(dateOfCreated), {
+          addSuffix: true,
+          locale: ptBR,
+        })}
+      </small>
       <PostHeader>
-        <h2>JavaScript data types and data structures</h2>
-        <small>há 1 dia</small>
+        <h2>{title}</h2>
       </PostHeader>
       <PostContent>
-        <p>
-          Programming languages all have built-in data structures, but these
-          often differ from one language to another. This article attempts to
-          list the built-in data structures available in
-        </p>
+        <p>{content}</p>
       </PostContent>
     </PostContainer>
   )

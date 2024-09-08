@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
-import avatar from '../../../../assets/avatar.png'
 import building from '../../../../assets/building.svg'
 import github from '../../../../assets/github.svg'
 import users from '../../../../assets/users.svg'
 
 import { ArrowUpRightFromSquare } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { api } from '../../../../lib/axios'
 import {
   AvatarContainer,
   ProfileContainer,
@@ -14,35 +15,77 @@ import {
   SocialItem,
 } from './styles'
 
+export interface UserProfile {
+  login: string
+  id: number
+  node_id: string
+  avatar_url: string
+  gravatar_id: string
+  url: string
+  html_url: string
+  followers_url: string
+  following_url: string
+  gists_url: string
+  starred_url: string
+  subscriptions_url: string
+  organizations_url: string
+  repos_url: string
+  events_url: string
+  received_events_url: string
+  type: string
+  site_admin: boolean
+  name: string | null
+  company: string | null
+  blog: string
+  location: string | null
+  email: string | null
+  hireable: boolean | null
+  bio: string | null
+  twitter_username: string | null
+  public_repos: number
+  public_gists: number
+  followers: number
+  following: number
+  created_at: string
+  updated_at: string
+}
+
 export function Profile() {
+  const [profile, setProfile] = useState<UserProfile | null>(null)
+
+  async function loadProfile() {
+    const response = await api.get('/users/alexandrecdeo')
+    setProfile(response.data)
+  }
+
+  useEffect(() => {
+    loadProfile()
+  }, [])
+
   return (
     <ProfileContainer>
-      <AvatarContainer src={avatar} />
+      <AvatarContainer src={profile?.avatar_url} />
       <ProfileInfoContainer>
-        <Link to="#">
+        <Link to="https://github.com/AlexandreCDEO">
           github
           <ArrowUpRightFromSquare size={12} />
         </Link>
         <ProfileInfo>
-          <h1>Cameron Williamson</h1>
-          <p>
-            Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-            viverra massa quam dignissim aenean malesuada suscipit. Nunc,
-            volutpat pulvinar vel mass.
-          </p>
+          <h1>{profile?.name}</h1>
+          <p>{profile?.bio}</p>
         </ProfileInfo>
         <ProfileSocial>
           <SocialItem>
             <img src={github} alt="" />
-            <span>cameronwll</span>
+            <span>{profile?.login}</span>
           </SocialItem>
           <SocialItem>
             <img src={building} alt="" />
-            <span>Rocketseat</span>
+            <span>{profile?.company}</span>
           </SocialItem>
           <SocialItem>
             <img src={users} alt="" />
-            <span>32 seguidores</span>
+            <span>{profile?.followers} seguidores</span>
           </SocialItem>
         </ProfileSocial>
       </ProfileInfoContainer>
