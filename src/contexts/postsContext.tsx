@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { api } from '../lib/axios'
+import { searchPosts } from '../http/searchPosts'
 
 interface User {
   login: string
@@ -79,21 +79,19 @@ export const PostsContext = createContext({} as PostsContextType)
 
 export function PostsProvider({ children }: PostsProviderProps) {
   const [posts, setPosts] = useState<GitHubIssue[]>([])
-  async function loadPosts(query = '') {
-    const repo = 'alexandrecdeo/github-blog'
-    const querySearch = `${query} repo:${repo}`
 
-    const response = await api.get('/search/issues', {
-      params: {
-        q: querySearch,
-      },
-    })
-
-    setPosts(response.data.items)
+  const loadPosts = async (query: string) => {
+    try {
+      const result = await searchPosts({ query })
+      console.log('result', result)
+      setPosts(result)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
-    loadPosts()
+    loadPosts('')
   }, [])
 
   return (

@@ -5,7 +5,7 @@ import users from '../../../../assets/users.svg'
 
 import { ArrowUpRightFromSquare } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { api } from '../../../../lib/axios'
+import { searchProfile } from '../../../../http/searchProfile'
 import {
   AvatarContainer,
   ProfileContainer,
@@ -54,8 +54,8 @@ export function Profile() {
   const [profile, setProfile] = useState<UserProfile | null>(null)
 
   async function loadProfile() {
-    const response = await api.get('/users/alexandrecdeo')
-    setProfile(response.data)
+    const response = await searchProfile()
+    setProfile(response)
   }
 
   useEffect(() => {

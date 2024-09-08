@@ -8,8 +8,6 @@ import { Search } from './components/search'
 export function Home() {
   const { posts } = useContext(PostsContext)
 
-  console.log(posts)
-
   return (
     <AppContainer>
       <Profile />
